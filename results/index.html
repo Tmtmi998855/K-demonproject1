@@ -144,9 +144,9 @@
     // =============== 설정 ===============
     // K‑Demon 결과 URL 패턴. 필요에 맞게 수정하세요.
     // 예) https://k-demon.kr/result/xxxx  혹은  https://k-demon.kr/xxxx
-    const KD_BASE = "https://k-demon.kr/result/"; // 끝에 슬래시 유지
-    const OPEN_IN_NEW_TAB = true;  // true면 새 탭으로 열기
-    const AUTO_REDIRECT = false;   // true로 바꾸면 결과 계산 즉시 이동(테스트 끝→자동 이동)
+    const KD_BASE = "./results/?type=";  // 결과 페이지로 이동
+    const OPEN_IN_NEW_TAB = false;       // 같은 탭
+    const AUTO_REDIRECT  = true;         // 계산 즉시 이동(원하면 false)
 
     // 정답 동률일 때의 기본 선택(논란 줄이기용 임의 규칙)
     const TIE_BREAK = { EI: 'I', SN: 'N', TF: 'F', JP: 'P' };
