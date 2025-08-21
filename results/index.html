@@ -28,6 +28,14 @@
     .current{outline:2px solid var(--accent)}
     footer{padding:14px 20px 22px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,.06)}
     a{color:var(--accent);text-decoration:none}
+
+    /* === 모바일 최적화(반응형) === */
+    @media (max-width: 640px) {
+      .wrap { padding: 12px; }
+      .hero { grid-template-columns: 1fr; }                 /* 2열 → 1열 스택 */
+      .hero img { height: auto; aspect-ratio: 3 / 4; }      /* 비율 유지 */
+      .grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+    }
   </style>
 </head>
 <body>
@@ -80,7 +88,7 @@
     ESTP:'행동/임기응변. 현장 해결사.'
   };
 
-  // 업로드된 실제 파일명 매핑 (스크린샷 기반)
+  // 실제 업로드 파일명 매핑
   const IMG_MAP = {
     ENTP:'../assets/demons/1-ENTP.png',
     ENTJ:'../assets/demons/10-ENTJ.png',
@@ -115,6 +123,8 @@
   function renderHero(){
     heroTypeEl.textContent = current;
     heroImgEl.src = getImgSrc(current);
+    heroImgEl.loading = 'eager';     // ↑ 첫 화면 이미지 우선 로딩
+    heroImgEl.decoding = 'async';    // ↑ 비동기 디코딩
     heroImgEl.onerror = () => { heroImgEl.src = '../assets/demons/_placeholder.png'; };
     heroDescEl.textContent = DESCS[current] || '유형 설명을 준비 중입니다.';
     document.title = `K-Demon MBTI 결과 – ${current}`;
@@ -125,7 +135,12 @@
     gridEl.innerHTML = '';
     TYPES.forEach(t => {
       const card = document.createElement('div'); card.className = 'card2'+(t===current?' current':'');
-      const img = document.createElement('img'); img.src = getImgSrc(t); img.alt = `${t} 데몬 이미지`; img.onerror = () => { img.src = '../assets/demons/_placeholder.png'; };
+      const img = document.createElement('img');
+      img.src = getImgSrc(t);
+      img.alt = `${t} 데몬 이미지`;
+      img.loading = 'lazy';         // ← 아래쪽 이미지는 지연 로딩
+      img.decoding = 'async';
+      img.onerror = () => { img.src = '../assets/demons/_placeholder.png'; };
       const cap = document.createElement('div'); cap.className='cap';
       const tag = document.createElement('span'); tag.className='tag'; tag.textContent=t;
       const btn = document.createElement('button'); btn.textContent='보기'; btn.className='btn secondary';
