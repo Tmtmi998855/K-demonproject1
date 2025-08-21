@@ -39,6 +39,20 @@
     .hidden{display:none!important}
     footer{padding:14px 20px 22px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,.06)}
     a{color:var(--accent);text-decoration:none}
+    /* 모바일에서만 버튼 텍스트 줄바꿈 표시 */
+    .br-sm { display: none; }
+
+    @media (max-width: 480px) {
+      .br-sm { display: inline; }
+
+      /* 버튼 두 개는 가로로 유지, 안내 문구는 다음 줄로 내려보내기 */
+      .btns { flex-wrap: wrap; gap: 8px; }
+      .btns .muted { flex-basis: 100%; order: 2; margin-top: 4px; }
+
+      /* 버튼이 좁은 폭에서도 예쁘게 보이도록 패딩/줄간격 조정 */
+      .left { gap: 8px; }
+      button, .btn { padding: 10px 12px; line-height: 1.15; text-align: center; }
+    }
   </style>
 </head>
 <body>
@@ -61,8 +75,13 @@
 
         <div class="btns">
           <div class="left">
-            <button id="submitBtn" type="button" aria-label="결과 보기">결과 보기</button>
-            <button id="resetBtn" type="button" class="btn secondary" aria-label="다시 하기">다시 하기</button>
+            <button id="submitBtn" type="button" aria-label="결과 보기">
+              결과<span class="br-sm"><br></span>보기
+            </button>
+
+            <button id="resetBtn" type="button" class="btn secondary" aria-label="다시 하기">
+              다시<span class="br-sm"><br></span>하기
+            </button>
           </div>
           <span class="muted">10문항 모두 응답하면 자동으로 결과 페이지로 이동합니다.</span>
         </div>
